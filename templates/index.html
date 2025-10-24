@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}CryptoFlask - Inicio{% endblock %}
+
+{% block content %}
+<div class="section welcome-section">
+    <h2>Bienvenido a CryptoFlask</h2>
+    <p class="welcome-text">Sistema profesional de criptografía asimétrica para cifrado, descifrado, firma y verificación de mensajes utilizando RSA-2048.</p>
+    
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">K</div>
+            <h3>Gestión de Claves</h3>
+            <p>Genera y administra pares de claves RSA de 2048 bits de forma segura.</p>
+            <a href="{{ url_for('keys') }}" class="feature-link">Ir a Claves</a>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">E</div>
+            <h3>Cifrado</h3>
+            <p>Cifra mensajes utilizando criptografía de clave pública RSA-OAEP.</p>
+            <a href="{{ url_for('encrypt_page') }}" class="feature-link">Cifrar Mensaje</a>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">D</div>
+            <h3>Descifrado</h3>
+            <p>Descifra mensajes con tu clave privada de manera segura.</p>
+            <a href="{{ url_for('decrypt_page') }}" class="feature-link">Descifrar Mensaje</a>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">S</div>
+            <h3>Firma Digital</h3>
+            <p>Firma mensajes usando RSA-PSS para garantizar autenticidad e integridad.</p>
+            <a href="{{ url_for('sign_page') }}" class="feature-link">Firmar Mensaje</a>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">V</div>
+            <h3>Verificación</h3>
+            <p>Verifica la autenticidad de firmas digitales con clave pública.</p>
+            <a href="{{ url_for('verify_page') }}" class="feature-link">Verificar Firma</a>
+        </div>
+    </div>
+</div>
+
+<div class="section info-section">
+    <h2>Cómo Funciona</h2>
+    <div class="info-grid">
+        <div class="info-item">
+            <div class="info-number">1</div>
+            <div class="info-content">
+                <h4>Genera tus Claves</h4>
+                <p>Crea un par de claves RSA (pública y privada) con un nombre identificador único. Las claves se almacenan de forma segura en formato PEM.</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-number">2</div>
+            <div class="info-content">
+                <h4>Cifra o Firma</h4>
+                <p>Usa la clave pública para cifrar mensajes destinados al propietario de la clave privada, o usa tu clave privada para firmar mensajes que quieras autenticar.</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-number">3</div>
+            <div class="info-content">
+                <h4>Descifra o Verifica</h4>
+                <p>Descifra mensajes con tu clave privada para leer contenido confidencial, o verifica firmas digitales con la clave pública del firmante para validar autenticidad.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section" style="background: var(--bg-primary); border: 2px solid var(--border-color);">
+    <h2 style="border-bottom: 2px solid var(--secondary-color);">Características Técnicas</h2>
+    <div style="display: grid; gap: 16px; margin-top: 20px;">
+        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; border-left: 4px solid var(--primary-color);">
+            <h4 style="margin-bottom: 8px; color: var(--text-primary); font-size: 16px; font-weight: 600;">Algoritmo RSA-2048</h4>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Utiliza claves de 2048 bits que proporcionan un alto nivel de seguridad para datos sensibles.</p>
+        </div>
+        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; border-left: 4px solid var(--primary-color);">
+            <h4 style="margin-bottom: 8px; color: var(--text-primary); font-size: 16px; font-weight: 600;">Padding OAEP</h4>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Optimal Asymmetric Encryption Padding con SHA-256 para cifrado seguro y resistente a ataques.</p>
+        </div>
+        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; border-left: 4px solid var(--primary-color);">
+            <h4 style="margin-bottom: 8px; color: var(--text-primary); font-size: 16px; font-weight: 600;">Firma RSA-PSS</h4>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Probabilistic Signature Scheme con SHA-256 para firmas digitales seguras y verificables.</p>
+        </div>
+        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; border-left: 4px solid var(--primary-color);">
+            <h4 style="margin-bottom: 8px; color: var(--text-primary); font-size: 16px; font-weight: 600;">Formato Base64</h4>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Todos los mensajes cifrados y firmas se codifican en Base64 para fácil transferencia y almacenamiento.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

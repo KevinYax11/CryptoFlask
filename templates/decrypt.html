@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}CryptoFlask - Descifrar{% endblock %}
+
+{% block content %}
+<div class="section">
+    <h2>
+        <span class="section-number">D</span>
+        Descifrar Mensaje
+    </h2>
+    
+    <form action="{{ url_for('route_decrypt') }}" method="POST" class="form-primary">
+        <div class="form-group">
+            <label for="dec_message">Mensaje cifrado</label>
+            <div style="position: relative;">
+                <textarea id="dec_message" name="message" placeholder="Ingrese el mensaje cifrado en Base64" required></textarea>
+                <button type="button" class="btn-paste" onclick="pasteText('dec_message')">Pegar</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="dec_key_name">Nombre de la clave privada</label>
+            <input type="text" id="dec_key_name" name="key_name" placeholder="Ejemplo: mis_claves" required>
+            <small class="helper-text">Ingrese el nombre sin extensión de archivo</small>
+        </div>
+        <button type="submit" class="btn-secondary">Descifrar con Clave Privada</button>
+    </form>
+    
+    {% if decrypted_message %}
+        <div class="result">
+            <div class="result-header">
+                <strong>Mensaje Descifrado</strong>
+                <button type="button" class="btn-copy" onclick="copyToClipboard('decrypted-content', this)">Copiar</button>
+            </div>
+            <div class="result-content" id="decrypted-content">{{ decrypted_message }}</div>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+function copyToClipboard(elementId, button) {
+    const text = document.getElementById(elementId).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        const originalText = button.textContent;
+        button.textContent = 'Copiado';
+        button.classList.add('copied');
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('copied');
+        }, 2000);
+    });
+}
+
+async function pasteText(textareaId) {
+    try {
+        const text = await navigator.clipboard.readText();
+        document.getElementById(textareaId).value = text;
+    } catch (err) {
+        alert('No se pudo pegar el texto. Asegúrese de dar permisos al navegador.');
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}CryptoFlask - Verificar{% endblock %}
+
+{% block content %}
+<div class="section">
+    <h2>
+        <span class="section-number">V</span>
+        Verificar Firma
+    </h2>
+    
+    <form action="{{ url_for('route_verify') }}" method="POST" class="form-primary">
+        <div class="form-group">
+            <label for="ver_message">Mensaje original</label>
+            <div style="position: relative;">
+                <textarea id="ver_message" name="message" placeholder="Ingrese el mensaje original" required></textarea>
+                <button type="button" class="btn-paste" onclick="pasteText('ver_message')">Pegar</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ver_signature">Firma digital</label>
+            <div style="position: relative;">
+                <textarea id="ver_signature" name="signature" placeholder="Ingrese la firma en Base64" required></textarea>
+                <button type="button" class="btn-paste" onclick="pasteText('ver_signature')">Pegar</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="ver_key_name">Nombre de la clave pública</label>
+            <input type="text" id="ver_key_name" name="key_name" placeholder="Ejemplo: mis_claves" required>
+            <small class="helper-text">Ingrese el nombre sin extensión de archivo</small>
+        </div>
+        <button type="submit" class="btn-secondary">Verificar con Clave Pública</button>
+    </form>
+    
+    {% if verification_result is not none %}
+        {% if verification_result == 'True' %}
+            <div class="result result-success">
+                <div class="result-header">
+                    <strong>Firma Válida</strong>
+                </div>
+                <p>La firma digital es auténtica y el mensaje no ha sido alterado.</p>
+            </div>
+        {% else %}
+            <div class="result result-error">
+                <div class="result-header">
+                    <strong>Firma Inválida</strong>
+                </div>
+                <p>La firma digital no es válida o el mensaje ha sido modificado.</p>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+
+<script>
+function copyToClipboard(elementId, button) {
+    const text = document.getElementById(elementId).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+        const originalText = button.textContent;
+        button.textContent = 'Copiado';
+        button.classList.add('copied');
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('copied');
+        }, 2000);
+    });
+}
+
+async function pasteText(textareaId) {
+    try {
+        const text = await navigator.clipboard.readText();
+        document.getElementById(textareaId).value = text;
+    } catch (err) {
+        alert('No se pudo pegar el texto. Asegúrese de dar permisos al navegador.');
+    }
+}
+</script>
+{% endblock %}
